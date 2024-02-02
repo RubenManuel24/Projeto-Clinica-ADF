@@ -10,7 +10,7 @@ final class RestClient extends DioForNative {
             receiveTimeout: const Duration(seconds: 60))) {
               interceptors.addAll([
                  LogInterceptor(requestBody: true, responseBody: true),
-                 AuthInterceptor(),
+                 AuthInterceptor(),     
               ]);
             }
 
