@@ -1,0 +1,64 @@
+import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
+import 'package:fe_lab_clinicas_self_service/src/modules/self_service/self_service_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_getit/flutter_getit.dart';
+import 'package:signals_flutter/signals_flutter.dart';
+
+class SelfServicePge extends StatefulWidget {
+
+  const SelfServicePge({ super.key });
+
+  @override
+  State<SelfServicePge> createState() => _SelfServicePgeState();
+}
+
+class _SelfServicePgeState extends State<SelfServicePge>  with MessageViewMixin{
+
+  final controller = Injector.get<SelfServiceController>();
+
+  @override
+  void initState() {
+    messageListener(controller);
+
+    //Estrutura de controlle
+    WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) {
+      controller.startProcess();
+      effect((){
+         var baseRoute = '/self-service/';
+         final step = controller.stap;
+
+         switch(step){
+           case FormSteps.none:
+             return;
+           case FormSteps.whoIAm:
+             baseRoute += 'whoIAm';
+           case FormSteps.findPatient:
+              baseRoute += 'find-patient';
+           case FormSteps.patient:
+              baseRoute += 'patient';
+           case FormSteps.document:
+              baseRoute += 'documents';
+           case FormSteps.done:
+              baseRoute += 'done';
+           case FormSteps.restart:
+             return;
+         }
+
+         Navigator.of(context).pushNamed(baseRoute);
+
+      } );
+
+    });
+
+    super.initState();
+  }
+   
+   @override
+   Widget build(BuildContext context) {
+       return const Scaffold(
+           body: Center(
+            child: CircularProgressIndicator(),
+           ),
+       );
+  }
+}

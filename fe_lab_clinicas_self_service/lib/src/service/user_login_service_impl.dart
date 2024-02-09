@@ -14,7 +14,6 @@ class UserLoginServiceImpl implements UserLoginService {
   Future<Either<ServiceException, Unit>> execute(
       String email, String password) async {
     final loginResult = await userRepository.login(email, password);
-
     switch (loginResult) {
       case Left(value: AuthException()):
         return Left(ServiceException(message: 'Erro ao realizar login'));
