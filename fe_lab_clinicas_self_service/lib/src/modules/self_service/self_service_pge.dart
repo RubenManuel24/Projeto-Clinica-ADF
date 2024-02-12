@@ -21,7 +21,7 @@ class _SelfServicePgeState extends State<SelfServicePge>  with MessageViewMixin{
     messageListener(controller);
 
     //Estrutura de controlle
-    WidgetsBinding.instance.addPersistentFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.startProcess();
       effect((){
          var baseRoute = '/self-service/';
