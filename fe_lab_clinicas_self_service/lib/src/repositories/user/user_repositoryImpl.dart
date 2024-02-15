@@ -17,7 +17,7 @@ class UserRepositoryImpl implements UserRepository {
       String email, String password) async {
     try {
       final Response(data: {'access_token': accessToken}) =
-          await restClient.unauth.post('/auth',
+          await restClient.auth.post('/auth',
               data: {'email': email, 'password': password, 'admin': true});
       return Right(accessToken);
     } on DioException catch (e, s) {

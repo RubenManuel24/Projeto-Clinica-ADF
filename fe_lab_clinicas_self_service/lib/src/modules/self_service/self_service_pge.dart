@@ -41,11 +41,11 @@ class _SelfServicePgeState extends State<SelfServicePge>  with MessageViewMixin{
            case FormSteps.done:
               baseRoute += 'done';
            case FormSteps.restart:
+           Navigator.of(context).popUntil(ModalRoute.withName('/self-service'));
+           controller.startProcess();
              return;
          }
-
          Navigator.of(context).pushNamed(baseRoute);
-
       } );
 
     });
