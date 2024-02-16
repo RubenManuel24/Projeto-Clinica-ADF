@@ -32,5 +32,17 @@ class PatientController with MessageStateMixin {
 
      }
    }
+
+   Future<void> saveAndNext(RegisterPatientModel registerPatientModel) async {
+     final result = await _repository.register(registerPatientModel);
+     switch(result){
+      case Left():
+        showError('Erro ao atualizar dados do paciente, chane o atendente');
+      case Right(value: final pateint):
+       showInfo('Paciente atualizado com sucesso');
+       this.pateint = pateint;
+       goNextStep();
+     }
+   }
   
 }

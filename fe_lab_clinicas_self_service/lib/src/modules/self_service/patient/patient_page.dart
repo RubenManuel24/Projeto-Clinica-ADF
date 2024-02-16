@@ -18,7 +18,8 @@ class PatientPage extends StatefulWidget {
   State<PatientPage> createState() => _PatientPageState();
 }
 
-class _PatientPageState extends State<PatientPage> with PatientFormController, MessageViewMixin {
+class _PatientPageState extends State<PatientPage>
+    with PatientFormController, MessageViewMixin {
   final formKey = GlobalKey<FormState>();
   final selfServiceController = Injector.get<SelfServiceController>();
   final PatientController controller = Injector.get<PatientController>();
@@ -29,17 +30,17 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
   @override
   void initState() {
     messageListener(controller);
-    final SelfServiceModel(: patient) = selfServiceController.model;
-    
+    final SelfServiceModel(:patient) = selfServiceController.model;
+
     patientFound = patient != null;
     enableForm = !patientFound;
-   initializeForm(patient);
-   effect((){
-    if(controller.nextStep){
-    selfServiceController.updatePatientAndGoDocument(controller.pateint);
-   }
-   });
-    
+    initializeForm(patient);
+    effect(() {
+      if (controller.nextStep) {
+        selfServiceController.updatePatientAndGoDocument(controller.pateint);
+      }
+    });
+
     super.initState();
   }
 
@@ -70,9 +71,9 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                 child: Column(
                   children: [
                     Visibility(
-                      visible: patientFound,
-                      replacement: Image.asset('assets/images/lupa_icon.png'),
-                      child: Image.asset('assets/images/check_icon.png')),
+                        visible: patientFound,
+                        replacement: Image.asset('assets/images/lupa_icon.png'),
+                        child: Image.asset('assets/images/check_icon.png')),
                     const SizedBox(height: 24),
                     Visibility(
                       visible: patientFound,
@@ -108,9 +109,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                       readOnly: !enableForm,
                       controller: nameEC,
                       validator: Validatorless.required("Nome obrigatório"),
-                      decoration:
-                          const InputDecoration(label: Text('Nome do Paciente')),
-                        
+                      decoration: const InputDecoration(
+                          label: Text('Nome do Paciente')),
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
@@ -126,11 +126,11 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                     TextFormField(
                       readOnly: !enableForm,
                       controller: phoneEC,
-                       validator: Validatorless.required("Telefone obrigatório"),
-                       inputFormatters: [
+                      validator: Validatorless.required("Telefone obrigatório"),
+                      inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         TelefoneInputFormatter()
-                       ],
+                      ],
                       decoration: const InputDecoration(
                           label: Text('Telefone de Contato')),
                     ),
@@ -138,23 +138,23 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                     TextFormField(
                       readOnly: !enableForm,
                       controller: documentEC,
-                       validator: Validatorless.required("CPF obrigatório"),
-                       inputFormatters: [
+                      validator: Validatorless.required("CPF obrigatório"),
+                      inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
-                        CepInputFormatter()
-                       ],
-                      decoration:
-                          const InputDecoration(label: Text('Digite o seu CPF')),
+                        CpfInputFormatter()
+                      ],
+                      decoration: const InputDecoration(
+                          label: Text('Digite o seu CPF')),
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       readOnly: !enableForm,
                       controller: cepEC,
-                       validator: Validatorless.required("CEP obrigatório"),
-                       inputFormatters: [
+                      validator: Validatorless.required("CEP obrigatório"),
+                      inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         CepInputFormatter()
-                       ],
+                      ],
                       decoration: const InputDecoration(label: Text('CEP')),
                     ),
                     const SizedBox(height: 16),
@@ -165,7 +165,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                           child: TextFormField(
                             readOnly: !enableForm,
                             controller: streetEC,
-                             validator: Validatorless.required("Endereço obrigatório"),
+                            validator:
+                                Validatorless.required("Endereço obrigatório"),
                             decoration:
                                 const InputDecoration(label: Text('Endereço')),
                           ),
@@ -176,7 +177,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                           child: TextFormField(
                             readOnly: !enableForm,
                             controller: numberEC,
-                            validator: Validatorless.required("Número obrigatório"),
+                            validator:
+                                Validatorless.required("Número obrigatório"),
                             decoration:
                                 const InputDecoration(label: Text('Número')),
                           ),
@@ -190,8 +192,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                           child: TextFormField(
                             readOnly: !enableForm,
                             controller: complementEC,
-                            decoration:
-                                const InputDecoration(label: Text('Complemento')),
+                            decoration: const InputDecoration(
+                                label: Text('Complemento')),
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -199,7 +201,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                           child: TextFormField(
                             readOnly: !enableForm,
                             controller: stateEC,
-                             validator: Validatorless.required("Estado obrigatório"),
+                            validator:
+                                Validatorless.required("Estado obrigatório"),
                             decoration:
                                 const InputDecoration(label: Text('Estado')),
                           ),
@@ -213,7 +216,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                           child: TextFormField(
                             readOnly: !enableForm,
                             controller: cityEC,
-                            validator: Validatorless.required("Cidade obrigatório"),
+                            validator:
+                                Validatorless.required("Cidade obrigatório"),
                             decoration:
                                 const InputDecoration(label: Text('Cidade')),
                           ),
@@ -223,7 +227,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                           child: TextFormField(
                             readOnly: !enableForm,
                             controller: districtEC,
-                              validator: Validatorless.required("Bairro obrigatório"),
+                            validator:
+                                Validatorless.required("Bairro obrigatório"),
                             decoration:
                                 const InputDecoration(label: Text('Bairro')),
                           ),
@@ -244,7 +249,7 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         CepInputFormatter()
-                       ],
+                      ],
                       decoration: const InputDecoration(
                           label: Text('Responsável Identificação')),
                     ),
@@ -252,19 +257,26 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                     Visibility(
                       visible: !enableForm,
                       replacement: SizedBox(
-                                height: 48,
-                                width:  double.infinity,
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      final valid = formKey.currentState?.validate() ?? false;
-                                      if(valid){
-                                        controller.updateAndNext(updatePatient(selfServiceController.model.patient!));
-                                      }
-                                    },
-                                    child: Visibility(
-                                      visible: !patientFound,
-                                      replacement: const Text('SALVAR E CONTINUAR'),
-                                      child: const Text('CADASTRAR')))),
+                          height: 48,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                final valid =
+                                    formKey.currentState?.validate() ?? false;
+                                if (valid) {
+                                  if (patientFound) {
+                                    controller.updateAndNext(updatePatient(
+                                        selfServiceController.model.patient!));
+                                  } else {
+                                    controller
+                                        .saveAndNext(createPatientRegister());
+                                  }
+                                }
+                              },
+                              child: Visibility(
+                                  visible: !patientFound,
+                                  replacement: const Text('SALVAR E CONTINUAR'),
+                                  child: const Text('CADASTRAR')))),
                       child: Row(
                         children: [
                           Expanded(
@@ -272,11 +284,11 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                               height: 48,
                               child: OutlinedButton(
                                   onPressed: () {
-                                   setState(() {
-                                     enableForm = true;
-                                   });
+                                    setState(() {
+                                      enableForm = true;
+                                    });
                                   },
-                                child: const Text('EDITAR')),
+                                  child: const Text('EDITAR')),
                             ),
                           ),
                           const SizedBox(width: 17),
@@ -285,7 +297,8 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
                                 height: 48,
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      controller.pateint = selfServiceController.model.patient;
+                                      controller.pateint =
+                                          selfServiceController.model.patient;
                                       controller.goNextStep();
                                     },
                                     child: const Text('CONTINUAR'))),
@@ -298,6 +311,7 @@ class _PatientPageState extends State<PatientPage> with PatientFormController, M
               ),
             ),
           ),
-        ));
+        )
+      );
   }
 }

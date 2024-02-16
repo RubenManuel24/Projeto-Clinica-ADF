@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../model/patient_model.dart';
+import '../../../repositories/patients/patient_repository.dart';
 import 'patient_page.dart';
 
 mixin PatientFormController on State<PatientPage> {
@@ -70,6 +71,28 @@ mixin PatientFormController on State<PatientPage> {
             city: cityEC.text,
             district: districtEC.text),
         guardian: guardianEC.text,
-        guardianIdentificationNumber: patient.guardianIdentificationNumber);
+        guardianIdentificationNumber: guardianIndentificationNumberEC.text);
   }
+
+  
+  RegisterPatientModel createPatientRegister(){
+    return (
+        name: nameEC.text,
+        email: emailEC.text,
+        phoneNumber: phoneEC.text,
+        document: documentEC.text,
+        address: (
+           cep: cepEC.text,
+            streetAddress: streetEC.text,
+            number: numberEC.text,
+            state: stateEC.text,
+            addressComplement: complementEC.text,
+            city: cityEC.text,
+            district: districtEC.text
+           ),
+        guardian: guardianEC.text,
+        guardianIdentificationNumber: guardianIndentificationNumberEC.text);
+  }
+
+
 }
