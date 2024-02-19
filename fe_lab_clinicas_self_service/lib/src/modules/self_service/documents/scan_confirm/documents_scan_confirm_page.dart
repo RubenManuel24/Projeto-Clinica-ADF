@@ -1,3 +1,4 @@
+import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
 import 'package:flutter/material.dart';
 
 class DocumentsScanConfirmPage extends StatelessWidget {
@@ -6,9 +7,91 @@ class DocumentsScanConfirmPage extends StatelessWidget {
 
    @override
    Widget build(BuildContext context) {
+      final sizeOf = MediaQuery.sizeOf(context);
        return Scaffold(
            appBar: AppBar(title: const Text('Document Confirm'),),
-           body: Container(),
+           body:  Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+          child: Container(
+              width: sizeOf.width * .85,
+              margin: const EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: LabClinicasTheme.orangeColor)),
+              child: Column(
+                children: [
+                  Image.asset('assets/images/folder.png'),
+                  const SizedBox(height: 24),
+                  Text(
+                    'ADICIONAR DOCUMENTOS',
+                    style: LabClinicasTheme.titleSmalltyle,
+                  ),
+                  const SizedBox(height: 32),
+                  const Text(
+                    'Selecione o documento que deseja fotografar',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: LabClinicasTheme.blueColor),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: 300,
+                    width: sizeOf.height * .8,
+                    // child: Row(
+                    //   children: [
+                    //     DocumentBoxWidget(
+                    //       uploaded: true,
+                    //       icon: Image.asset('assets/images/id_card.png'),
+                    //       label: 'CARTEIRINHA',
+                    //       totalFiles: 2,
+                    //     ),
+                    //     const SizedBox(width: 32),
+                    //     DocumentBoxWidget(
+                    //       uploaded: false,
+                    //       icon: Image.asset('assets/images/document.png'),
+                    //       label: 'PEDIDO MÉDICO',
+                    //       totalFiles: 3,
+                    //     ),
+                    //   ],
+                    // ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.red,
+                              side:const BorderSide(color: Colors.red),
+                              fixedSize: const Size.fromHeight(48)
+
+                            ),
+                              onPressed: () {},
+                              child: const Text('REMOVER TODAS'))),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: LabClinicasTheme.orangeColor,
+                                fixedSize: Size.fromHeight(48)
+                              ),
+                              onPressed: () {}, 
+                              child: const Text('FINALIZAR')))
+                    ],
+                  )
+                ],
+              )
+              ),
+        ),
+      ),
        );
   }
 }
