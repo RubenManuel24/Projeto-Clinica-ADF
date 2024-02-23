@@ -26,10 +26,8 @@ class _DocumentsPageState extends State<DocumentsPage> with MessageViewMixin {
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
     final documents = selfServiceController.model.documents;
-    final totalHealthInsuranceCard =
-        documents?[DocumentType.healthImsuranceCard]?.length ?? 0;
-    final totalMedicalOrder =
-        documents?[DocumentType.medicalOrder]?.length ?? 0;
+    final totalHealthInsuranceCard = documents?[DocumentType.healthImsuranceCard]?.length ?? 0;
+    final totalMedicalOrder = documents?[DocumentType.medicalOrder]?.length ?? 0;
 
     return Scaffold(
       appBar: LabCLinicasSelfServiceAppBar(),
@@ -117,6 +115,7 @@ class _DocumentsPageState extends State<DocumentsPage> with MessageViewMixin {
                                     fixedSize: const Size.fromHeight(48)),
                                 onPressed: () {
                                   selfServiceController.clearDocuments();
+                                  setState(() {});
                                 },
                                 child: const Text('REMOVER TODAS'))),
                         const SizedBox(
@@ -127,7 +126,9 @@ class _DocumentsPageState extends State<DocumentsPage> with MessageViewMixin {
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: LabClinicasTheme.orangeColor,
                                     fixedSize: Size.fromHeight(48)),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/self-service/done');
+                                },
                                 child: const Text('FINALIZAR')))
                       ],
                     ),

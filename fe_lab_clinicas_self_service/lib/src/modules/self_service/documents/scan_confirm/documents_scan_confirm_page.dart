@@ -1,16 +1,31 @@
+import 'dart:io';
+import 'package:camera/camera.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
+import 'package:fe_lab_clinicas_self_service/src/modules/self_service/documents/scan_confirm/documents_scan_confirm_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_getit/flutter_getit.dart';
+import 'package:signals_flutter/signals_flutter.dart';
+
+import '../../widget/lab_clinicas_self_service_app_bar.dart';
 
 class DocumentsScanConfirmPage extends StatelessWidget {
+  final controller = Injector.get<DocumentsScanConfirmController>();
 
-  const DocumentsScanConfirmPage({ super.key });
+  DocumentsScanConfirmPage({super.key});
 
-   @override
-   Widget build(BuildContext context) {
-      final sizeOf = MediaQuery.sizeOf(context);
-       return Scaffold(
-           appBar: AppBar(title: const Text('Document Confirm'),),
-           body:  Align(
+  @override
+  Widget build(BuildContext context) {
+    final sizeOf = MediaQuery.sizeOf(context);
+    final foto = ModalRoute.of(context)!.settings.arguments as XFile;
+
+    controller.pathRemoteStorage.listen(context, (){
+      Navigator.of(context).pop();
+      Navigator.of(context).pop(controller.pathRemoteStorage.value);
+    });
+    return Scaffold(
+      appBar: LabCLinicasSelfServiceAppBar(),
+      body: Align(
         alignment: Alignment.topCenter,
         child: SingleChildScrollView(
           child: Container(
@@ -23,75 +38,64 @@ class DocumentsScanConfirmPage extends StatelessWidget {
                   border: Border.all(color: LabClinicasTheme.orangeColor)),
               child: Column(
                 children: [
-                  Image.asset('assets/images/folder.png'),
-                  const SizedBox(height: 24),
+                  Image.asset('assets/images/foto_confirm_icon.png'),
+                  const SizedBox(height: 15),
                   Text(
-                    'ADICIONAR DOCUMENTOS',
+                    'CONFIRA SUA FOTO',
                     style: LabClinicasTheme.titleSmalltyle,
                   ),
                   const SizedBox(height: 32),
-                  const Text(
-                    'Selecione o documento que deseja fotografar',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: LabClinicasTheme.blueColor),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: SizedBox(
+                      width: sizeOf.width * .5,
+                      child: DottedBorder(
+                        dashPattern: const [1, 10, 1, 3],
+                        radius: const Radius.circular(16),
+                        borderType: BorderType.RRect,
+                        strokeWidth: 4,
+                        color: LabClinicasTheme.orangeColor,
+                        strokeCap: StrokeCap.square,
+                        child: Image.file(
+                          File(foto.path),
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    height: 300,
-                    width: sizeOf.height * .8,
-                    // child: Row(
-                    //   children: [
-                    //     DocumentBoxWidget(
-                    //       uploaded: true,
-                    //       icon: Image.asset('assets/images/id_card.png'),
-                    //       label: 'CARTEIRINHA',
-                    //       totalFiles: 2,
-                    //     ),
-                    //     const SizedBox(width: 32),
-                    //     DocumentBoxWidget(
-                    //       uploaded: false,
-                    //       icon: Image.asset('assets/images/document.png'),
-                    //       label: 'PEDIDO MÉDICO',
-                    //       totalFiles: 3,
-                    //     ),
-                    //   ],
-                    // ),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 32),
                   Row(
                     children: [
                       Expanded(
+                        child: SizedBox(
+                          height: 48,
                           child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.red,
-                              side:const BorderSide(color: Colors.red),
-                              fixedSize: const Size.fromHeight(48)
-
-                            ),
-                              onPressed: () {},
-                              child: const Text('REMOVER TODAS'))),
-                      const SizedBox(
-                        width: 24,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('TIRAR OUTRA'),
+                          ),
+                        ),
                       ),
+                      const SizedBox(width: 16),
                       Expanded(
+                        child: SizedBox(
+                          height: 48,
                           child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: LabClinicasTheme.orangeColor,
-                                fixedSize: Size.fromHeight(48)
-                              ),
-                              onPressed: () {}, 
-                              child: const Text('FINALIZAR')))
+                            onPressed: () async {
+                              final imageBytes = await foto.readAsBytes();
+                              final fileName = foto.name;
+                              await controller.uploadImage(imageBytes, fileName);
+                            },
+                            child: const Text('SALVAR'),
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 ],
-              )
-              ),
+              )),
         ),
       ),
-       );
+    );
   }
 }

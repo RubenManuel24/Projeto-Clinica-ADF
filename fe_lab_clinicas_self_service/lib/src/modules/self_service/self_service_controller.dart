@@ -64,6 +64,7 @@ class SelfServiceController with MessageStateMixin {
 
   void clearDocuments(){
     _model = _model.copyWith(documents: () => {});
+
   }
 
 }
