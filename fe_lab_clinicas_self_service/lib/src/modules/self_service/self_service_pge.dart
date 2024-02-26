@@ -5,15 +5,13 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 class SelfServicePge extends StatefulWidget {
-
-  const SelfServicePge({ super.key });
+  const SelfServicePge({super.key});
 
   @override
   State<SelfServicePge> createState() => _SelfServicePgeState();
 }
 
-class _SelfServicePgeState extends State<SelfServicePge>  with MessageViewMixin{
-
+class _SelfServicePgeState extends State<SelfServicePge> with MessageViewMixin {
   final controller = Injector.get<SelfServiceController>();
 
   @override
@@ -23,42 +21,42 @@ class _SelfServicePgeState extends State<SelfServicePge>  with MessageViewMixin{
     //Estrutura de controlle
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.startProcess();
-      effect((){
-         var baseRoute = '/self-service/';
-         final step = controller.stap;
+      effect(() {
+        var baseRoute = '/self-service/';
+        final step = controller.stap;
 
-         switch(step){
-           case FormSteps.none:
-             return;
-           case FormSteps.whoIAm:
-             baseRoute += 'whoIAm';
-           case FormSteps.findPatient:
-              baseRoute += 'find-patient';
-           case FormSteps.patient:
-              baseRoute += 'patient';
-           case FormSteps.document:
-              baseRoute += 'documents';
-           case FormSteps.done:
-              baseRoute += 'done';
-           case FormSteps.restart:
-           Navigator.of(context).popUntil(ModalRoute.withName('/self-service'));
-           controller.startProcess();
-             return;
-         }
-         Navigator.of(context).pushNamed(baseRoute);
-      } );
-
+        switch (step) {
+          case FormSteps.none:
+            return;
+          case FormSteps.whoIAm:
+            baseRoute += 'whoIAm';
+          case FormSteps.findPatient:
+            baseRoute += 'find-patient';
+          case FormSteps.patient:
+            baseRoute += 'patient';
+          case FormSteps.document:
+            baseRoute += 'documents';
+          case FormSteps.done:
+            baseRoute += 'done';
+          case FormSteps.restart:
+            Navigator.of(context)
+                .popUntil(ModalRoute.withName('/self-service'));
+            controller.startProcess();
+            return;
+        }
+        Navigator.of(context).pushNamed(baseRoute);
+      });
     });
 
     super.initState();
   }
-   
-   @override
-   Widget build(BuildContext context) {
-       return const Scaffold(
-           body: Center(
-            child: CircularProgressIndicator(),
-           ),
-       );
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }
