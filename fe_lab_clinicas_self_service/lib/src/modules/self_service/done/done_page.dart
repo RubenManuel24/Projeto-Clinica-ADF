@@ -2,10 +2,9 @@ import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
 import 'package:flutter/material.dart';
 
 class DonePage extends StatelessWidget {
+  const DonePage({super.key});
 
-  const DonePage({ super.key });
-
-@override
+  @override
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
     return Scaffold(
@@ -31,23 +30,67 @@ class DonePage extends StatelessWidget {
                   const SizedBox(height: 24),
                   Container(
                     constraints: const BoxConstraints(
-                      maxWidth: 218,
+                      minWidth: 218,
                       minHeight: 48,
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 16),
                     decoration: BoxDecoration(
                       color: LabClinicasTheme.orangeColor,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: const Text('BG5898',
-                    textAlign: TextAlign.center,
-                     style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold
-                     ),
+                    child: const Text(
+                      'BG5898',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
-                  )
+                  ),
+                  const SizedBox(height: 40),
+                  const Text.rich(
+                    TextSpan(
+                      style: TextStyle(
+                          color: LabClinicasTheme.blueColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                      children: [
+                        TextSpan(text: 'AGUARDE! \n'),
+                        TextSpan(text: 'Sua senha será chamado no painel! \n'),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 35),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('IMPRIMIR SENHA'))),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: OutlinedButton(
+                              onPressed: () {},
+                              child: const Text('ENVIAR SENHA VIA SMS')))
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                       style: ElevatedButton.styleFrom(backgroundColor: LabClinicasTheme.orangeColor),
+                        onPressed: () {},
+                        child: const Text(
+                          'FINALIZAR',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        )),
+                  ),
                 ],
               )),
         ),
