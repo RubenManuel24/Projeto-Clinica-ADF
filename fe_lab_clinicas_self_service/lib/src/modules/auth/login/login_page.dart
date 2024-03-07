@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with MessageViewMixin{
   final formKey = GlobalKey<FormState>();
-  final emailEC = TextEditingController(text: "terminal1@gmail.com");
+  final emailEC = TextEditingController(text: "manuel@gmail.com");
   final passwordEC = TextEditingController(text: "123123");
   final controller = Injector.get<LoginController>();
    

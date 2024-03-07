@@ -18,7 +18,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final Response(data: {'access_token': accessToken}) =
           await restClient.auth.post('/auth',
-              data: {'email': email, 'password': password, 'admin': true});
+              data: {'email': email, 'password': password});
       return Right(accessToken);
     } on DioException catch (e, s) {
       log('Erro ao realozar login', error: e, stackTrace: s);
