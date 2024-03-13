@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:fe_lab_clinicas_adm/src/pages/checkin/checkin_router.dart';
 import 'package:fe_lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_router.dart';
 import 'package:fe_lab_clinicas_adm/src/pages/splash/splash_pages.dart';
 import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
@@ -31,7 +32,7 @@ class LabClinicasADM extends StatelessWidget {
       pagesBuilders: [
         FlutterGetItPageBuilder(page: (_) => const SplashPages(), path: '/')
       ],
-      pages: [LoginRoute(),  HomeRoute(), PreCheckinRouter()],
+      pages: [const LoginRoute(),  HomeRoute(), PreCheckinRouter(), const CheckinRouter()],
       );
   }
 }
