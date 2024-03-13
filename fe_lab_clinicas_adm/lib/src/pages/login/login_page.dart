@@ -95,7 +95,8 @@ class _LoginPageState extends State<LoginPage> with MessageViewMixin{
                                   formKey.currentState?.validate() ?? false;
 
                               if (valid) {
-                                controller.login(emailEC.text, passwordEC.text);
+                                  Navigator.of(context).pushReplacementNamed('/pre-checkin',);
+                                //controller.login(emailEC.text, passwordEC.text);
                               }
                             },
                             child: const Text("ENTRAR"))),
