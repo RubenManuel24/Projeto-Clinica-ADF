@@ -18,5 +18,13 @@
         "titleBar.inactiveBackground": "#c8a2c899",
         "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#C8A2C8"
+    "peacock.color": "#C8A2C8",
+    "cSpell.words": [
+        "Aplixation",
+        "asyncstate",
+        "cupertino",
+        "getit",
+        "Painel",
+        "validatorless"
+    ]
 }
