@@ -1,23 +1,38 @@
+
 import 'package:fe_lab_clinicas_core/fe_lab_clinicas_core.dart';
 import 'package:flutter/material.dart';
 
-class CheckinImageLink extends StatelessWidget {
-  final String label;
+import 'checkin_image_dialog.dart';
 
-  const CheckinImageLink({
+class CheckinImageLink extends StatelessWidget {
+   const CheckinImageLink({
     Key? key,
-    required this.label,
-  }) : super(key: key);
+    required this.label, required this.image,
+  });
+
+  final String label;
+  final String image;
+
+  void showImageDialog(BuildContext context){
+    showDialog(context: context, builder: (context){
+      return CheckinImageDialog(context, pathImage: image,);
+    });
+  }
 
    @override
    Widget build(BuildContext context) {
-       return Padding(
-         padding: const EdgeInsets.all(10),
-         child: Text(label, style: const TextStyle(
-          color: LabClinicasTheme.blueColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w400
-         ),),
+       return InkWell(
+        onTap: (){
+          showImageDialog(context);
+        },
+         child: Padding(
+           padding: const EdgeInsets.all(10),
+           child: Text(label, style: const TextStyle(
+            color: LabClinicasTheme.blueColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w400
+           ),),
+         ),
        );
   }
 }

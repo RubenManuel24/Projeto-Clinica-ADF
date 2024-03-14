@@ -9,28 +9,35 @@ import '../../shared/data_item.dart';
 import 'widget/checkin_image_link.dart';
 
 class CheckinPage extends StatefulWidget {
-
-  const CheckinPage({ super.key });
+  const CheckinPage({super.key});
 
   @override
   State<CheckinPage> createState() => _CheckinPageState();
 }
 
-class _CheckinPageState extends State<CheckinPage> with MessageViewMixin{
+class _CheckinPageState extends State<CheckinPage> with MessageViewMixin {
   final controller = Injector.get<CheckinController>();
 
-   @override
+  @override
   void initState() {
     messageListener(controller);
+    effect((){
+      if(controller.endProcess()){
+          Navigator.of(context).pushReplacementNamed('/end-checkin');
+      }
+    });
     super.initState();
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    
     //Este código faz com que sempre que houver alguma mudança nos dados da nossa tela, a tela faz um Builder por completo
-    final PatientInformationFormModel(:password, :patient) =
-        controller.informationForm.watch(context)!;
+    final PatientInformationFormModel(
+      :password,
+      :patient,
+      :medicalOrder,
+      :healthInsuranceCard
+    ) = controller.informationForm.watch(context)!;
 
     return Scaffold(
       appBar: LabClinicasAppBar(),
@@ -76,14 +83,13 @@ class _CheckinPageState extends State<CheckinPage> with MessageViewMixin{
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: LabClinicasTheme.lightOrangeColor,
-                        borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: Text('Cadastro',
-                       style: LabClinicasTheme.titleSmalltyle.copyWith(
-                        color: LabClinicasTheme.orangeColor,
-                        fontWeight: FontWeight.w900
-                       ),
+                          color: LabClinicasTheme.lightOrangeColor,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: Text(
+                        'Cadastro',
+                        style: LabClinicasTheme.titleSmalltyle.copyWith(
+                            color: LabClinicasTheme.orangeColor,
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -134,39 +140,38 @@ class _CheckinPageState extends State<CheckinPage> with MessageViewMixin{
                     const SizedBox(
                       height: 24,
                     ),
-                     Container(
+                    Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: LabClinicasTheme.lightOrangeColor,
-                        borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: Text('Validar Imagens Exames',
-                       style: LabClinicasTheme.titleSmalltyle.copyWith(
-                        color: LabClinicasTheme.orangeColor,
-                        fontWeight: FontWeight.w900
-                       ),
+                          color: LabClinicasTheme.lightOrangeColor,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: Text(
+                        'Validar Imagens Exames',
+                        style: LabClinicasTheme.titleSmalltyle.copyWith(
+                            color: LabClinicasTheme.orangeColor,
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
-                     const SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                          CheckinImageLink(label: 'Carteirinha'),
-                         Column(
+                        CheckinImageLink(
+                            label: 'Carteirinha', image: healthInsuranceCard),
+                        Column(
                           children: [
-                              CheckinImageLink(label: 'Pedido Médico 1'),
-                              CheckinImageLink(label: 'Pedido Médico 2'),
-                              CheckinImageLink(label: 'Pedido Médico 3'),
+                            for (final (index, medicalOrder) in medicalOrder.indexed)
+                              CheckinImageLink(
+                                  label: 'Pedido Médico ${index + 1}',
+                                  image: medicalOrder),
                           ],
-                         )
-
+                        )
                       ],
                     ),
-
-                     const SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
                     SizedBox(
@@ -174,9 +179,7 @@ class _CheckinPageState extends State<CheckinPage> with MessageViewMixin{
                       height: 48,
                       child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                '/checkin',
-                                arguments: controller.informationForm);
+                            controller.endCheckin();
                           },
                           child: const Text('FINALIZAR ATENDIMENTO')),
                     )
