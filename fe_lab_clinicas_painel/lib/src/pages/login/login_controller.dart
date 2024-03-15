@@ -30,7 +30,6 @@ class LoginController  with MessageStateMixin{
       case Right(value: _):
        _logged.value = true;
        print("Passou ------------ ${_logged}");
-
     }
   }
 
